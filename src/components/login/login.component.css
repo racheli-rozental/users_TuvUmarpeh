@@ -1,0 +1,130 @@
+/* כללי */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5; /* רקע בהיר לדף */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  /* עיצוב ה-form */
+  form {
+    margin-top: 60px;
+    margin-left: 550px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 350px;  /* קטן יותר */
+    width: 100%;
+    text-align: center;  /* טקסט במרכז */
+  }
+  
+  /* כותרת טקסט */
+  p {
+    text-align: center;
+    font-size: 24px;
+    color: #673ab7;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* עיצוב השדות */
+  div {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* עיצוב קלטים */
+  input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* שינוי צבע גבול כשיש ריחוף על הקלט */
+  input:focus {
+    border-color: #673ab7;
+  }
+  
+  /* הצגת הודעות שגיאה */
+  div > div {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* כפתור שליחה */
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #673ab7; /* צבע סגול מהמם */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* שינוי צבע כפתור כאשר ריחפים עליו */
+  button:hover {
+    background-color: #5e35b1;
+    transform: translateY(-2px); /* אפקט הרמה של כפתור */
+  }
+  
+  /* כפתור לא פעיל */
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  /* אפקטים כשיש שגיאות */
+  input.ng-invalid.ng-touched {
+    border-color: #f44336; /* צבע אדום כשיש שגיאה */
+  }
+  
+  input.ng-valid.ng-touched {
+    border-color: #4caf50; /* צבע ירוק כשיש תקינות */
+  }
+.alert {
+    padding: 8px 12px; /* צמצום הפדינג */
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 20px; /* גודל גופן קטן יותר */
+    color: #fff;
+    background-color: #f44336; /* צבע אדום לדוגמה */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%; /* מתאים לרוחב הפנוי */
+    max-width: 300px; /* מקסימום רוחב עבור ה-alert */
+    margin: 10px auto; /* מרכז את ה-alert בעמוד */
+  }
+  
+  .alert.success {
+    background-color: #4caf50; /* ירוק להצלחה */
+  }
+  
+  .alert.info {
+    background-color: #2196f3; /* כחול לאינפורמציה */
+  }
+  
+  .alert.warning {
+    background-color: #ff9800; /* כתום לאזהרה */
+  }
+  

@@ -1,0 +1,32 @@
+<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div>
+        <label for="email">Email:</label>
+        <input id="email" formControlName="email">
+
+        @if(loginForm.get('name')?.invalid && loginForm.get('name')?.touched)
+        {<div>
+            מייל הוא שדה חובה.
+        </div>}
+    </div>
+
+
+    <div>
+        <label for="numberId">numberId:</label>
+        <input id="numberId" type="numberId" formControlName="numberId">
+        @if(loginForm.get('name')?.invalid && loginForm.get('name')?.touched)
+        {<div>
+            סיסמה הוא שדה חובה.
+        </div>}
+
+    </div>
+
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+</form>
+<!-- Alert הדגמה -->
+@if(alertMessage){
+<div class="alert" [ngClass]="alertType"> {{ alertMessage }}
+  </div>
+}
+  

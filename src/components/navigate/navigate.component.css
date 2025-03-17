@@ -1,0 +1,15 @@
+/* עיצוב ה-mat-toolbar */
+mat-toolbar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgb(23, 209, 209); /* צבע רקע כהה לכל ה-toolbar */
+  color: white; /* צבע טקסט לבן */
+  padding: 0 20px;
+  border-radius: 10px;
+} 
+mat-toolbar .primary{
+  color: aqua;
+  background-color: blue;
+}
+

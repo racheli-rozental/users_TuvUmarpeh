@@ -1,0 +1,12 @@
+<form [formGroup]="registerActivityForm" (ngSubmit)="registerForActivity()">
+  <input formControlName="IdNumber" placeholder="Id Number" required>
+ 
+
+
+    @if(registerActivityForm.get('IdNumber')?.invalid && registerActivityForm.get('IdNumber')?.touched)
+    {<div>
+      מ. זהות הוא שדה חובה
+    </div>}
+
+<button type="submit" >הרשמה</button>
+</form>

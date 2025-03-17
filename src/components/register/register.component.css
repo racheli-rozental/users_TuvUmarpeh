@@ -1,0 +1,115 @@
+/* רקע הדף */
+body {
+    background-color: #ffccbc; /* צבע רקע בורדו בהיר */
+    font-family: 'Arial', sans-serif;
+    color: #444;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* מניעת גלילה */
+}
+
+/* עיצוב הכללי של הטופס */
+.form-container {
+    margin-top: 50px;
+    margin-left: 50px; /* הרחקתי מהקצוות יותר */
+    background-color: #ffffff;
+    padding: 20px; /* padding קטן יותר */
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 90%; /* יותר קטן, לא יגרום לגלילה */
+    box-sizing: border-box;
+    text-align: center;
+    border: 3px solid #ff7043; /* גבול צבע כתום בהיר */
+    display: flex; /* השתמש ב-flexbox */
+    flex-wrap: wrap; /* מאפשר שדות לזרום לשורה חדשה כאשר אין מקום */
+    gap: 10px; /* רווח קטן יותר בין השדות */
+    justify-content: flex-start; /* תצוגה בשורה */
+}
+
+/* עיצוב שדות */
+.form-group {
+    flex: 1 1 30%; /* כל שדה יתפוס עד 30% מהרוחב של המיכל */
+    margin-bottom: 0; /* הרווחים בין השדות יהיו מה- gap של ה-flex */
+}
+
+/* עיצוב תוויות */
+label {
+    font-size: 14px; /* גודל קטן יותר */
+    font-weight: bold;
+    color: #388e3c; /* צבע ירוק כהה */
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* עיצוב קלטים */
+input[type="text"], input[type="email"], input[type="phone"],input[type="date"], select {
+    width: 100%;
+    padding: 8px; /* padding קטן יותר */
+    font-size: 12px; /* גודל קטן יותר */
+    border: 2px solid #ff9800; /* גבול כתום בהיר */
+    border-radius: 8px; /* רדיוס קטן יותר */
+    margin-top: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+/* עיצוב פוקוס */
+input:focus, select:focus {
+    border-color: #1976d2; /* צבע כחול בעת פוקוס */
+    outline: none;
+}
+
+/* כפתור */
+button {
+    width: 100%;
+    padding: 10px; /* padding קטן יותר */
+    font-size: 12px; /* גודל קטן יותר */
+    background-color: #f44336; /* צבע אדום חזק */
+    color: white;
+    border: none;
+    border-radius: 8px; /* רדיוס קטן יותר */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #d32f2f; /* צבע אדום כהה בעת ריחוף */
+}
+
+button:disabled {
+    background-color: #bdbdbd; /* צבע אפור כאשר הכפתור לא פעיל */
+    cursor: not-allowed;
+}
+
+/* הודעות שגיאה */
+.error-message {
+    color: #e53935; /* צבע אדום חזק להודעות שגיאה */
+    font-size: 12px; /* גודל קטן יותר */
+    margin-top: 5px;
+    text-align: left;
+}
+
+/* עיצוב של תיבת הבחירה */
+select {
+    width: 100%;
+    padding: 8px; /* padding קטן יותר */
+    font-size: 12px; /* גודל קטן יותר */
+    border: 2px solid #ff9800; /* גבול כתום */
+    border-radius: 8px; /* רדיוס קטן יותר */
+    background-color: #fff3e0; /* צבע בהיר */
+    color: #388e3c; /* צבע ירוק כהה לתוכן */
+}
+
+/* עיצוב של תיבת הבחירה בפוקוס */
+select:focus {
+    border-color: #1976d2; /* צבע כחול */
+}
+
+/* מיקום הטופס במרכז הדף */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

@@ -13,7 +13,7 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   // פונקציית התחברות ושמירת ה-JWT
-  login(email: string, IdNumber: string): Observable<any> {
+  login(email: string, IdNumber: Number): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, IdNumber }).pipe(
       tap((response: any) => {
         if (response && response.Token) {
@@ -85,7 +85,7 @@ export class UsersService {
     return this.http.put(`${this.apiUrl}/users/${idNumber}`, formData, { headers });
   }
 
-  registerForActivity(IdNumber: string, activityId: string) {
+  registerForActivity(IdNumber: Number, activityId: string) {
     const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/registerforactivity`, { IdNumber, activityId }, { headers });
   }
@@ -95,7 +95,7 @@ export class UsersService {
     return this.http.get(`${this.apiUrl}/activity`, { headers });
   }
 
-  getActivity(activityId: string) {
+  getActivity(activityId: Number) {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.apiUrl}/activity/${activityId}`, { headers });
   }

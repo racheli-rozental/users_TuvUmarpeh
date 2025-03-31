@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class UsersService {
-  private apiUrl = "https://server-angular-tovumarpeh.onrender.com/login";
+  private apiUrl = "https://server-angular-tovumarpeh.onrender.com";
   private decodedToken: any | null = null;
 
   constructor(private http: HttpClient) {}
@@ -16,7 +16,7 @@ export class UsersService {
   login(Email: string, IdNumber: Number): Observable<any> {
     console.log('Login request initiated with:', { IdNumber, Email });
 
-    return this.http.post(`${this.apiUrl}`, { IdNumber, Email }).pipe(
+    return this.http.post(`${this.apiUrl}/login`, { IdNumber, Email }).pipe(
       tap(
         (response: any) => {
           console.log('Server response:', response);

@@ -1,0 +1,73 @@
+<form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
+    <h2>עדכון פרטים</h2>
+    <div class="form-group">
+        <label>מספר זהות:</label>
+        <input type="text" formControlName="IdNumber" readonly>
+    </div>
+    <div class="form-group">
+        <label>שם פרטי:</label>
+        <input type="text" formControlName="FirstName" required>
+        @if(updateForm.get('FirstName')?.invalid && updateForm.get('FirstName')?.touched)
+        { <div>
+            חובה להזין שם .
+        </div>
+        }
+    </div>
+
+    <div class="form-group">
+        <label>שם משפחה:</label>
+        <input type="text" formControlName="LastName" required>
+        @if(updateForm.get('LastName')?.invalid && updateForm.get('LastName')?.touched)
+        { <div>
+            חובה להזין משפחה .
+        </div>
+        }
+    </div>
+    <div class="form-group">
+        <label>כתובת:</label>
+        <input type="text" formControlName="Address" required>
+        @if(updateForm.get('Address')?.invalid && updateForm.get('Address')?.touched)
+        { <div>
+            חובה להזין כתובת .
+        </div>
+        }
+    </div>
+    <div class="form-group">
+        <label> טלפון:</label>
+        <input type="Phone" formControlName="Phone" required>
+        @if(updateForm.get('Phone')?.invalid && updateForm.get('Phone')?.touched)
+        { <div>
+            חובה להזין טלפון .
+        </div>
+        }
+    </div>
+    <div class="form-group">
+        <label>עיר :</label>
+        <input type="text" formControlName="City" required>
+        @if(updateForm.get('City')?.invalid && updateForm.get('City')?.touched)
+        { <div>
+            חובה להזין עיר .
+        </div>
+        }
+    </div>
+    <div class="form-group">
+        <label>Email :</label>
+        <input type="Email" formControlName="Email" required>
+        @if(updateForm.get('Email')?.invalid && updateForm.get('Email')?.touched)
+        { <div>
+            חובה להזין דוא"ל .
+        </div>
+        }
+    </div>
+    <div class="form-group">
+        <label>תאריך לידה :</label>
+        <input type="date" formControlName="BirthDate" required>
+        @if(updateForm.get('BirthDate')?.invalid && updateForm.get('BirthDate')?.touched)
+        { <div>
+            חובה להזין תאריך לידה .
+        </div>
+        }
+    </div>
+        <button type="submit" class="btn btn-primary"> <mat-icon>edit</mat-icon>
+            עדכן</button>
+</form>

@@ -1,26 +1,43 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  private apiUrl = "https://server-angular-tovumarpeh.onrender.com";
+  private apiUrl = "http://localhost:5074";
   private decodedToken: any | null = null;
 
   constructor(private http: HttpClient) {}
 
   // פונקציית התחברות ושמירת ה-JWT
   login(email: string, IdNumber: Number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { IdNumber,email }).pipe(
-      tap((response: any) => {
-        if (response && response.Token) {
-          sessionStorage.setItem('jwtToken', response.Token); // שמירת ה-JWT ב-sessionStorage
-          this.decodedToken = jwtDecode(response.Token); // פענוח ה-JWT ושמירתו
+    console.log('Login request initiated with:', { IdNumber, email });
+
+    return this.http.post(`${this.apiUrl}/login`, { IdNumber, email }).pipe(
+      tap(
+        (response: any) => {
+          console.log('Server response:', response);
+
+          if (response && response.token) { // עדכון המפתח ל-token
+            try {
+              sessionStorage.setItem('jwtToken', response.token); // שמירת ה-JWT ב-sessionStorage
+              console.log('Token saved in sessionStorage:', sessionStorage.getItem('jwtToken'));
+              this.decodedToken = jwtDecode(response.token); // פענוח ה-JWT ושמירתו
+              console.log('Decoded token:', this.decodedToken);
+            } catch (error) {
+              console.error('Error saving token to sessionStorage:', error);
+            }
+          } else {
+            console.warn('No token found in server response');
+          }
+        },
+        (error) => {
+          console.error('Error during login request:', error);
         }
-      })
+      )
     );
   }
 
@@ -45,6 +62,16 @@ export class UsersService {
     return this.decodedToken;
   }
 
+  // בדיקה אם הטוקן פג תוקף
+  isTokenExpired(): boolean {
+    const decodedToken = this.getDecodedToken();
+    if (decodedToken) {
+      const currentTime = Math.floor(Date.now() / 1000); // זמן נוכחי בשניות
+      return decodedToken.exp < currentTime;
+    }
+    return true;
+  }
+
   // קבלת מספר הזהות מתוך ה-JWT
   getIdNumberFromToken(): string | null {
     const decodedToken = this.getDecodedToken();
@@ -54,53 +81,85 @@ export class UsersService {
   // מחיקת ה-JWT מ-sessionStorage
   logout(): void {
     sessionStorage.removeItem('jwtToken');
-    this.decodedToken = null; // איפוס המידע המפוענח
+    this.decodedToken = null;
   }
 
   // בדיקה אם המשתמש מחובר
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    return !!token && !this.isTokenExpired();
   }
 
   // פונקציות API עם הוספת ה-JWT לכותרות
   private getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
+    if (!token || this.isTokenExpired()) {
+      console.error('Token is missing or expired.');
+      throw new Error('Token is missing or expired.');
+    }
     return new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
   }
 
-  getUser(IdNumber: Number) {
+  // קבלת פרטי משתמש לפי מספר זהות
+  getUser(IdNumber: Number): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.apiUrl}/users/${IdNumber}`, { headers });
   }
 
-  register(formData: FormData) {
+  // רישום משתמש חדש
+  register(formData: FormData): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/users`, formData, { headers });
   }
 
-  updateUser(idNumber: number, formData: FormData) {
+  // עדכון פרטי משתמש
+  updateUser(idNumber: number, formData: FormData): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.put(`${this.apiUrl}/users/${idNumber}`, formData, { headers });
   }
 
-  registerForActivity(IdNumber: Number, activityId: string) {
+  // רישום לפעילות
+  registerForActivity(IdNumber: Number, activityId: string): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/registerforactivity`, { IdNumber, activityId }, { headers });
   }
 
-  getActivities() {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/activity`, { headers });
+  // קבלת כל הפעילויות
+  getActivities(): Observable<any> {
+    const token = this.getToken();
+    console.log('JWT Token:', token);
+
+    if (!token || this.isTokenExpired()) {
+      console.error('Token is missing or expired.');
+      return throwError(() => new Error('Token is missing or expired.'));
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.apiUrl}/activity`, { headers }).pipe(
+      tap(
+        (response) => {
+          console.log('Activities:', response);
+        },
+        (error) => {
+          console.error('Error fetching activities:', error);
+        }
+      )
+    );
   }
 
-  getActivity(activityId: Number) {
+  // קבלת פרטי פעילות לפי מזהה
+  getActivity(activityId: Number): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.apiUrl}/activity/${activityId}`, { headers });
   }
 
-  registerActivity(id_number: number, activityId: number) {
+  // רישום משתמש לפעילות
+  registerActivity(id_number: number, activityId: number): Observable<any> {
     const enrollment = {
       IdActivities: activityId,
       IdNumber: id_number

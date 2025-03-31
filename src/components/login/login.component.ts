@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
       this.userService.login(this.loginForm.value.email, this.loginForm.value.numberId).subscribe(
         response => {
           console.log('Login successful', response);
+          console.log(sessionStorage.getItem('jwtToken'));
           // sessionStorage.setItem('userIdNumber', this.loginForm.value.numberId);
           if(this.loginForm.value.numberId == '024579822'||this.loginForm.value.numberId == '024570433'){
             window.location.href='http://localhost:5173'

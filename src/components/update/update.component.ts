@@ -66,13 +66,12 @@ import { MatIconModule } from '@angular/material/icon';
 export class UpdateComponent {
   updateForm: FormGroup;
   files: File[] = [];
-  numberId!:any
+  numberId!:string
 
   constructor(private fb: FormBuilder, private userService: UsersService, private router: Router) { 
     this.numberId  = this.userService.getIdNumberFromToken()||'';
-    this.numberId=Number(this.numberId);
     this.updateForm = this.fb.group({
-      IdNumber: [this.numberId],
+      IdNumber: [Number(this.numberId)],
       FirstName: ['', Validators.required],
       LastName: ['', Validators.required],
       Address: ['', Validators.required],
@@ -87,7 +86,7 @@ export class UpdateComponent {
   }
 
   loadUserData() {
-    this.userService.getUser(this.numberId).subscribe(user => {
+    this.userService.getUser(Number(this.numberId)).subscribe(user => {
       this.updateForm.patchValue(user);
     });
   }
@@ -125,7 +124,7 @@ export class UpdateComponent {
         }
       }
   
-      this.userService.updateUser(this.numberId, formData).subscribe({
+      this.userService.updateUser(Number(this.numberId), formData).subscribe({
         next: (res) => {
           console.log('Update successful', res);
           this.router.navigate(['/']);

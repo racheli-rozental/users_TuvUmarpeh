@@ -1,0 +1,116 @@
+/* כללי */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }  
+  /* מיכל הטופס */
+  .form-container {
+    justify-self: center;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* רוחב המקסימום של הטופס */
+    text-align: center; /* טקסט במרכז */
+  }
+  
+  /* כותרת הטופס */
+  .form-title {
+    font-size: 24px;
+    color: #673ab7;
+    margin-bottom: 30px;
+    font-weight: bold;
+  }
+  
+  /* קבוצת קלט */
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  /* תווית קלט */
+  label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  
+  /* עיצוב קלט */
+  input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* עיצוב קלט כאשר יש ריחוף */
+  input:focus {
+    border-color: #673ab7; /* סגול */
+  }
+  
+  /* הצגת הודעת שגיאה */
+  .error-message {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* כפתור רישום */
+  button.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #673ab7;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* שינוי צבע כפתור כשהוא פעיל */
+  button.submit-btn:hover {
+    background-color: #5e35b1;
+    transform: translateY(-2px); /* אפקט הרמה */
+  }
+  
+  /* כפתור לא פעיל */
+  button.submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  /* עיצוב ריספונסיבי */
+  @media (max-width: 768px) {
+    .form-container {
+      padding: 20px;
+      max-width: 90%;
+    }
+  
+    .form-title {
+      font-size: 22px;
+    }
+  
+    input {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    button.submit-btn {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  

@@ -1,0 +1,38 @@
+/* CSS לעיצוב כרטיס במרכז העמוד */
+.activity-card {
+    direction: rtl;
+    align-items: center;
+    margin: 20px auto; /* מרכז את הכרטיס */
+    width: 33%; /* גודל של שליש מהעמוד */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  mat-card-title {
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  
+  mat-card-subtitle {
+    font-size: 1.2em;
+    color: #757575;
+  }
+  
+  mat-card-content {
+    font-size: 1.1em;
+    color: #333;
+  }
+  
+  button {
+    display: flex;
+    align-items: center; 
+    margin-top: 10px;
+  }
+  button mat-icon {
+    margin-left: 5px;
+  }
+
+  
+
+  
+  

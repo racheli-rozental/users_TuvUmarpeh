@@ -1,0 +1,83 @@
+/* מיכל הפעילויות */
+.activity-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background-color: #fafafa;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    max-width: 600px;
+    margin: 60px auto;
+    text-align: center;
+  }
+  
+  /* כותרת פעילויות */
+  .activity-title {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #3f51b5;
+    margin-bottom: 30px;
+  }
+  
+  /* כפתור "Get Activity" */
+  .get-activities-btn {
+    background: linear-gradient(45deg, #ff4081, #00bcd4); /* גרדיאנט צבעוני */
+    color: white;
+    width: 200px;
+    padding: 15px;
+    font-size: 1.2em;
+    text-transform: none;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* ממרכז את הטקסט */
+  }
+  
+  .get-activities-btn:hover {
+    background: linear-gradient(45deg, #00bcd4, #ff4081); /* שינוי צבע ב-hover */
+  }
+  
+  /* כפתור של כל פעילות */
+  .activity-buttons button {
+    width: 100%;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 20px;
+    font-size: 1.1em;
+    text-transform: none;
+    border-radius: 8px;
+    background-color: #631cab; /* צבע רקע כתום */
+    color: white;
+    transition: background-color 0.3s ease;
+    text-align: left;
+  }
+  
+  .activity-buttons button:hover {
+    background-color: #770d9a; /* שינוי צבע ב-hover */
+  }
+  
+  button mat-icon {
+    margin-right: 15px;
+    font-size: 1.5em; /* הגדלה של האייקון */
+  }
+  
+  /* סגנונות בכפתורים */
+  .activity-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .activity-btn h4 {
+    margin: 0;
+    font-weight: normal;
+  }
+  
+  button.mat-raised-button {
+    transition: background-color 0.3s ease;
+  }
+  

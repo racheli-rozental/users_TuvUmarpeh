@@ -6,18 +6,24 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden; /* מניעת גלילה */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    direction: rtl; /* שינוי כיוון העיצוב מימין לשמאל */
 }
 
 /* עיצוב הכללי של הטופס */
 .form-container {
+    direction: rtl;
     margin-top: 50px;
-    margin-left: 50px; /* הרחקתי מהקצוות יותר */
+    margin-left: 200px; /* הרחקתי מהקצוות יותר */
     background-color: #ffffff;
     padding: 20px; /* padding קטן יותר */
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 90%; /* יותר קטן, לא יגרום לגלילה */
+    width: 80%;
+    max-width: 70%; /* יותר קטן, לא יגרום לגלילה */
     box-sizing: border-box;
     text-align: center;
     border: 3px solid #ff7043; /* גבול צבע כתום בהיר */
@@ -43,10 +49,11 @@ label {
 }
 
 /* עיצוב קלטים */
-input[type="text"], input[type="email"], input[type="phone"],input[type="date"], select {
+input[type="text"], input[type="email"], input[type="phone"], input[type="date"], select {
+    direction: rtl;
     width: 100%;
     padding: 8px; /* padding קטן יותר */
-    font-size: 12px; /* גודל קטן יותר */
+    font-size: 14px; /* גודל קטן יותר */
     border: 2px solid #ff9800; /* גבול כתום בהיר */
     border-radius: 8px; /* רדיוס קטן יותר */
     margin-top: 6px;
@@ -62,9 +69,10 @@ input:focus, select:focus {
 
 /* כפתור */
 button {
-    width: 100%;
-    padding: 10px; /* padding קטן יותר */
-    font-size: 12px; /* גודל קטן יותר */
+    width: 80%;
+    margin-right: 100px;
+    padding: 12px; 
+    font-size: 14px; /* גודל קטן יותר */
     background-color: #f44336; /* צבע אדום חזק */
     color: white;
     border: none;
@@ -106,10 +114,41 @@ select:focus {
     border-color: #1976d2; /* צבע כחול */
 }
 
-/* מיקום הטופס במרכז הדף */
-body {
+/* עיצוב כפתורי העלאת קובץ */
+.file-upload-group {
     display: flex;
-    justify-content: center;
+    gap: 10px; /* רווחים קטנים בין הכפתורים */
+    justify-content: flex-start; /* מתחילים מימין לשמאל */
+    width: 100%;
+    flex-wrap: wrap; /* יאפשר יציאה לשורה חדשה אם הכפתורים לא נכנסים */
+    margin-top: 20px; /* רווח קטן לפני השורה החדשה */
+    direction: rtl; /* כיוון מימין לשמאל */
+    justify-content: center; /* מרכז את הכפתורים בתוך השורה */
+}
+
+.file-upload-btn {
+    display: inline-flex;
     align-items: center;
-    height: 100vh;
+    background-color: #ff7043; /* צבע רקע כתום בהיר */
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: fit-content; /* מאפשר למרווח להיות מתאים */
+}
+
+.file-upload-btn:hover {
+    background-color: #f44336; /* צבע אדום כהה בריחוף */
+}
+
+.file-upload-btn .icon {
+    font-size: 20px; /* גודל האייקון */
+    margin-left: 8px; /* רווח בין האייקון לטקסט */
+}
+
+/* החבאת שדות הקובץ */
+input[type="file"] {
+    display: none;
 }

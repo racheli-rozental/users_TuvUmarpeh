@@ -1,23 +1,18 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UsersService } from '../../service/users.service';
-import S3 from 'aws-sdk/clients/s3';
-
-
+import { Router } from '@angular/router';
 
 @Component({
-  standalone: true,
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports:[ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'], // תיקון כאן
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  files: File[] = [];
 
-  constructor(private fb: FormBuilder, private userService: UsersService, private router: Router) {
+  constructor(private fb: FormBuilder, private userService:UsersService,private rout:Router) {
     this.registerForm = this.fb.group({
       IdNumber: ['', Validators.required],
       FirstName: ['', Validators.required],
@@ -26,55 +21,57 @@ export class RegisterComponent {
       Phone: ['', Validators.required],
       City: ['', Validators.required],
       Email: ['', [Validators.required, Validators.email]],
-      BirthDate: ['', Validators.required]
+      BirthDate: ['', Validators.required],
+      files: this.fb.array([])
     });
   }
 
-  onFileChange(event: Event, index: number) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.files[index] = input.files[0];
-    }
+  get files(): FormArray {
+    return this.registerForm.get('files') as FormArray;
   }
 
-  async uploadFiles(): Promise<string[]> {
-    const s3 = new S3({
-      accessKeyId: 'YOUR_ACCESS_KEY', // יש להחליף
-      secretAccessKey: 'YOUR_SECRET_KEY', // יש להחליף
-      region: 'YOUR_REGION', // יש להחליף
-    });
-
-    const uploadPromises = this.files.map(file => {
-      const params = {
-        Bucket: 'YOUR_BUCKET_NAME', // יש להחליף
-        Key: file.name,
-        Body: file,
-      };
-      return s3.upload(params).promise();
-    });
-
-    const results = await Promise.all(uploadPromises);
-    return results.map(result => result.Location); // מחזיר את ה-URLs של הקבצים שהועלו
-  }
-
-  async onSubmit() {
-    if (this.registerForm.valid) {
-      const { IdNumber, FirstName, LastName, Address, Phone, City, Email, BirthDate } = this.registerForm.value;
-      try {
-        const fileUrls = await this.uploadFiles();
-        console.log('Files uploaded:', fileUrls);
-        this.userService.register({ IdNumber, FirstName, LastName, Address, Phone, City, Email, BirthDate,  }).subscribe({
-          next: (res) => {
-            console.log('Registration successful', res);
-            this.router.navigate(['/']);
-          },
-          error: (err) => {
-            console.error('Registration failed', err);
-          }
-        });
-      } catch (error) {
-        console.error('File upload failed', error);
+  onFileChange(event: any, index: number) {
+    const file: File = event.target.files[0]; // קבל את הקובץ הראשון שנבחר
+    const fileArray = this.registerForm.get('files') as FormArray;
+  
+    // ודא שהמיקום קיים ב-FormArray
+    if (file) {
+      if (fileArray.length > index) {
+        fileArray.at(index).setValue(file); // עדכן את הקובץ במיקום המתאים
+      } else {
+        fileArray.insert(index, new FormControl(file)); // הוסף את הקובץ למיקום המתאים
       }
+    } else {
+      console.warn(`No file selected for index ${index}`);
     }
+  }
+
+  onSubmit() {
+    const formData = new FormData();
+    formData.append('IdNumber', this.registerForm.value.IdNumber);
+    formData.append('FirstName', this.registerForm.value.FirstName);
+    formData.append('LastName', this.registerForm.value.LastName);
+    formData.append('Address', this.registerForm.value.Address);
+    formData.append('Phone', this.registerForm.value.Phone);
+    formData.append('City', this.registerForm.value.City);
+    formData.append('Email', this.registerForm.value.Email);
+    formData.append('BirthDate', this.registerForm.value.BirthDate);
+
+    // הוספת קבצים ל-FormData
+    this.files.controls.forEach((control, index) => {
+      formData.append('files', control.value);
+    });
+
+    // שליחת הבקשה לשרת
+    this.userService.register(formData).subscribe({
+      next: (response) => {
+        console.log('User created successfully:', response);
+        this.rout.navigate(['/']);
+
+      },
+      error: (error) => {
+        console.error('Error creating user:', error);
+      }
+    });
   }
 }

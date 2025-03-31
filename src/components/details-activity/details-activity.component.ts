@@ -21,7 +21,7 @@ export class DetailsActivityComponent {
   }
 
   getActivityDetails() {
-    const activityId = this.route.snapshot.paramMap.get('id');
+    const activityId = Number(this.route.snapshot.paramMap.get('id'));
     if (activityId) {
       this.userService.getActivity(activityId).subscribe((data) => {
         this.activity = data;

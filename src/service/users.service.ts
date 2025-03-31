@@ -13,10 +13,10 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   // פונקציית התחברות ושמירת ה-JWT
-  login(email: string, IdNumber: Number): Observable<any> {
-    console.log('Login request initiated with:', { IdNumber, email });
+  login(Email: string, IdNumber: Number): Observable<any> {
+    console.log('Login request initiated with:', { IdNumber, Email });
 
-    return this.http.post(`${this.apiUrl}/login`, { IdNumber, email }).pipe(
+    return this.http.post(`${this.apiUrl}/login`, { IdNumber, Email }).pipe(
       tap(
         (response: any) => {
           console.log('Server response:', response);

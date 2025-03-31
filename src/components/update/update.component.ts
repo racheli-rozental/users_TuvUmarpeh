@@ -66,10 +66,11 @@ import { MatIconModule } from '@angular/material/icon';
 export class UpdateComponent {
   updateForm: FormGroup;
   files: File[] = [];
-  numberId!:number
+  numberId!:any
 
   constructor(private fb: FormBuilder, private userService: UsersService, private router: Router) { 
-    this.numberId  =Number( this.userService.getIdNumberFromToken());
+    this.numberId  = this.userService.getIdNumberFromToken()||'';
+    this.numberId=Number(this.numberId);
     this.updateForm = this.fb.group({
       IdNumber: [this.numberId],
       FirstName: ['', Validators.required],

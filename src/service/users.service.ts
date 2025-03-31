@@ -14,7 +14,7 @@ export class UsersService {
 
   // פונקציית התחברות ושמירת ה-JWT
   login(email: string, IdNumber: Number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { email, IdNumber }).pipe(
+    return this.http.post(`${this.apiUrl}/login`, { IdNumber,email }).pipe(
       tap((response: any) => {
         if (response && response.Token) {
           sessionStorage.setItem('jwtToken', response.Token); // שמירת ה-JWT ב-sessionStorage

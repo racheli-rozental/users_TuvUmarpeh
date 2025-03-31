@@ -4,7 +4,7 @@
         <label for="email">Email:</label>
         <input id="email" formControlName="email">
 
-        @if(loginForm.get('name')?.invalid && loginForm.get('name')?.touched)
+        @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched)
         {<div>
             מייל הוא שדה חובה.
         </div>}
@@ -14,9 +14,9 @@
     <div>
         <label for="numberId">numberId:</label>
         <input id="numberId" type="numberId" formControlName="numberId">
-        @if(loginForm.get('name')?.invalid && loginForm.get('name')?.touched)
+        @if(loginForm.get('numberId')?.invalid && loginForm.get('numberId')?.touched)
         {<div>
-            סיסמה הוא שדה חובה.
+            מספר זהות הוא שדה חובה.
         </div>}
 
     </div>
@@ -29,4 +29,4 @@
 <div class="alert" [ngClass]="alertType"> {{ alertMessage }}
   </div>
 }
-  
+

@@ -1,6 +1,22 @@
-<h3>Activity</h3>
-<button (click)="getActivities()">Get Activity</button>
-@for(activity of activities;track activity.idActivities){
-    <button (click)="viewCourseDetails(activity.idActivities)"><h4>{{activity.nameActivity}}</h4></button>
-}
+<div class="activity-container">
+    <h3 class="activity-title">פעילויות</h3>
 
+    <!-- כפתור להוצאת פעילויות -->
+    <button mat-raised-button color="accent" class="get-activities-btn"
+        (click)="getActivities()"><mat-icon>refresh</mat-icon> קבל פעילויות</button>
+
+    <!-- כפתורים לכל פעילות -->
+    <div class="activity-buttons">
+        <div class="activity-buttons">
+            @for(activity of activities;track activity.idActivities){
+                <!-- <h1>{{activity.dateActivity}}</h1>
+            <h1>{{today}}</h1> -->
+           @if(isLater(activity.dateActivity)){
+                 <button (click)="viewCourseDetails(activity.idActivities)"><mat-icon>event</mat-icon>
+                <h4>{{activity.nameActivity}}</h4></button>
+                 }
+                }
+                
+        </div>
+    </div>
+</div>

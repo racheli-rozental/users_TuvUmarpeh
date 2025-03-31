@@ -1,23 +1,39 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { UsersService } from '../../service/users.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { RegisterForActivityComponent } from './register-for-activity.component';
+@Component({
+  selector: 'app-register-for-activity',
+  templateUrl: './register-for-activity.component.html',
+  styleUrls: ['./register-for-activity.component.css']
+})
+export class RegisterForActivityComponent {
+  registerActivityForm!: FormGroup;
 
-describe('RegisterForActivityComponent', () => {
-  let component: RegisterForActivityComponent;
-  let fixture: ComponentFixture<RegisterForActivityComponent>;
+  constructor(private userService: UsersService, private route: ActivatedRoute, private router: Router, private fb: FormBuilder) {
+    this.registerActivityForm = this.fb.group({
+      IdNumber: ['', Validators.required]
+    });
+  }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [RegisterForActivityComponent]
-    })
-    .compileComponents();
+  registerForActivity() {
+    const activityIdString = this.route.snapshot.paramMap.get('id');
+    const activityId = activityIdString ? Number(activityIdString) : null;
 
-    fixture = TestBed.createComponent(RegisterForActivityComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    if (activityId) {
+      const idNumber = this.registerActivityForm.value.IdNumber;
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+      this.userService.registerActivity(idNumber, activityId).subscribe(response => {
+        console.log('User enrolled successfully:', response);
+        this.router.navigate(['/activity']);
+      }, error => {
+        console.error('Error enrolling user:', error);
+        // כאן ניתן להוסיף הודעת שגיאה למשתמש
+      });
+    }
+  }
+}
+
+// UsersService
+

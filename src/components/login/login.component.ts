@@ -3,10 +3,14 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { UsersService } from '../../service/users.service'
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule,CommonModule,MatIconModule,MatButtonModule,MatInputModule,MatFormFieldModule],
   templateUrl: './login.component.html',
   styleUrl:'./login.component.css'
 })
@@ -37,7 +41,14 @@ export class LoginComponent implements OnInit {
       this.userService.login(this.loginForm.value.email, this.loginForm.value.numberId).subscribe(
         response => {
           console.log('Login successful', response);
-          this.router.navigate(['/activity']); 
+          // sessionStorage.setItem('userIdNumber', this.loginForm.value.numberId);
+          if(this.loginForm.value.numberId == '024579822'||this.loginForm.value.numberId == '024570433'){
+            window.location.href='http://localhost:5173'
+            console.log('admin');
+          }
+          else{
+          this.router.navigate(['/activity']);
+          } 
         },
         error => {
           console.error('Login failed', error);

@@ -36,15 +36,6 @@
     }
   </div>
   <div class="form-group">
-    <label> טלפון:</label>
-    <input type="Phone" formControlName="Phone" required>
-    @if(registerForm.get('Phone')?.invalid && registerForm.get('Phone')?.touched)
-    { <div>
-      חובה להזין טלפון .
-    </div>
-    }
-  </div>
-  <div class="form-group">
     <label>עיר :</label>
     <input type="text" formControlName="City" required>
     @if(registerForm.get('City')?.invalid && registerForm.get('City')?.touched)
@@ -53,6 +44,16 @@
     </div>
     }
   </div>
+  <div class="form-group">
+    <label> טלפון:</label>
+    <input type="Phone" formControlName="Phone" required>
+    @if(registerForm.get('Phone')?.invalid && registerForm.get('Phone')?.touched)
+    { <div>
+      חובה להזין טלפון .
+    </div>
+    }
+  </div>
+ 
   <div class="form-group">
     <label>Email :</label>
     <input type="Email" formControlName="Email" required>
@@ -71,8 +72,30 @@
     </div>
     }
   </div>
-  <input type="file" (change)="onFileChange($event, 0)"/> 
-  <input type="file" (change)="onFileChange($event, 1)" /> 
-  <input type="file" (change)="onFileChange($event, 2)" />
-  <button type="submit" [disabled]="registerForm.invalid" class="submit-btn">Add User</button>
+  <div class="file-upload-group">
+    <label for="file1" class="file-upload-btn">
+      <span class="icon">+</span> העלה קובץ 1
+    </label>
+    <input type="file" id="file1" (change)="onFileChange($event, 0)" />
+  
+    <label for="file2" class="file-upload-btn">
+      <span class="icon">+</span> העלה קובץ 2
+    </label>
+    <input type="file" id="file2" (change)="onFileChange($event, 1)" />
+  
+    <label for="file3" class="file-upload-btn">
+      <span class="icon">+</span> העלה קובץ 3
+    </label>
+    <input type="file" id="file3" (change)="onFileChange($event, 2)" />
+  
+    <label for="file4" class="file-upload-btn">
+      <span class="icon">+</span> העלה ספח ת.ז.
+    </label>
+    <input type="file" id="file4" (change)="onFileChange($event, 3)" />
+  </div>
+  
+
+  <button type="submit" [disabled]="registerForm.invalid" class="submit-btn">
+    הוסף משתמש
+  </button>
 </form>

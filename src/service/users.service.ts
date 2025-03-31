@@ -1,38 +1,111 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  constructor(private http:HttpClient) { }
-  private apiUrl="http://localhost:5074"; 
-  register(data: { 
-    IdNumber: string, FirstName: string, LastName: string, Address: string, Phone: string, City: string, Email: string, BirthDate: string, 
-  }) {
-    return this.http.post(`${this.apiUrl}/users`, data);
+  private apiUrl = "https://server-angular-tovumarpeh.onrender.com";
+  private decodedToken: any | null = null;
+
+  constructor(private http: HttpClient) {}
+
+  // פונקציית התחברות ושמירת ה-JWT
+  login(email: string, IdNumber: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, { email, IdNumber }).pipe(
+      tap((response: any) => {
+        if (response && response.Token) {
+          sessionStorage.setItem('jwtToken', response.Token); // שמירת ה-JWT ב-sessionStorage
+          this.decodedToken = jwtDecode(response.Token); // פענוח ה-JWT ושמירתו
+        }
+      })
+    );
   }
-  registerForActivity(IdNumber:string,activityId:string){
-    return this.http.post(`${this.apiUrl}/registerforactivity`, { IdNumber, activityId });
+
+  // אחזור ה-JWT מ-sessionStorage
+  getToken(): string | null {
+    return sessionStorage.getItem('jwtToken');
   }
-  getActivities(){
-    return this.http.get(`${this.apiUrl}/activity`);
+
+  // פענוח ה-JWT
+  getDecodedToken(): any | null {
+    if (!this.decodedToken) {
+      const token = this.getToken();
+      if (token) {
+        try {
+          this.decodedToken = jwtDecode(token);
+        } catch (error) {
+          console.error('Error decoding token:', error);
+          this.decodedToken = null;
+        }
+      }
+    }
+    return this.decodedToken;
   }
-  getActivity(activityId:string){
-    return this.http.get(`${this.apiUrl}/activity/${activityId}`);
+
+  // קבלת מספר הזהות מתוך ה-JWT
+  getIdNumberFromToken(): string | null {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken ? decodedToken.IdNumber || null : null;
   }
+
+  // מחיקת ה-JWT מ-sessionStorage
+  logout(): void {
+    sessionStorage.removeItem('jwtToken');
+    this.decodedToken = null; // איפוס המידע המפוענח
+  }
+
+  // בדיקה אם המשתמש מחובר
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  // פונקציות API עם הוספת ה-JWT לכותרות
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
+
+  getUser(IdNumber: Number) {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/users/${IdNumber}`, { headers });
+  }
+
+  register(formData: FormData) {
+    const headers = this.getAuthHeaders();
+    return this.http.post(`${this.apiUrl}/users`, formData, { headers });
+  }
+
+  updateUser(idNumber: number, formData: FormData) {
+    const headers = this.getAuthHeaders();
+    return this.http.put(`${this.apiUrl}/users/${idNumber}`, formData, { headers });
+  }
+
+  registerForActivity(IdNumber: string, activityId: string) {
+    const headers = this.getAuthHeaders();
+    return this.http.post(`${this.apiUrl}/registerforactivity`, { IdNumber, activityId }, { headers });
+  }
+
+  getActivities() {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/activity`, { headers });
+  }
+
+  getActivity(activityId: string) {
+    const headers = this.getAuthHeaders();
+    return this.http.get(`${this.apiUrl}/activity/${activityId}`, { headers });
+  }
+
   registerActivity(id_number: number, activityId: number) {
     const enrollment = {
-      idActivities: activityId,
-      idNumber: id_number
-      
+      IdActivities: activityId,
+      IdNumber: id_number
     };
-    console.log('enrollment:', enrollment);
-    return this.http.post(`${this.apiUrl}/enroll`, enrollment);
+    const headers = this.getAuthHeaders();
+    return this.http.post(`${this.apiUrl}/enroll`, enrollment, { headers });
   }
-  login(email:string,IdNumber:string):Observable<any>{
-  return this.http.post(`${this.apiUrl}/login`, { email, IdNumber });
-  }}
-
-
+}

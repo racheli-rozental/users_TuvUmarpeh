@@ -1,7 +1,16 @@
 
-@if(activity){
-    <h2>{{ activity.nameActivity }}</h2> 
-    <h4>{{activity.dateActivity}}</h4>
-    <h5>{{activity.detailsActivity}}</h5>
-    <button (click)="registerActivity()">הרשמה לפעילות</button>
-}
+<mat-card *ngIf="activity" class="activity-card">
+    <mat-card-header>
+      <mat-card-title class="mat-h2">{{ activity.nameActivity }}</mat-card-title>
+      <mat-card-subtitle class="mat-h4">{{ activity.dateActivity }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="mat-body-1">{{ activity.detailsActivity }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="registerActivity()">
+        <mat-icon class="icon-spacing">check_circle</mat-icon> הרשמה לפעילות
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  

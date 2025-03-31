@@ -1,4 +1,18 @@
-    <button mat-raised-button class="primary"  (click)="onRegister()">רישום למערכת</button>
-    <button mat-raised-button class="primary"  (click)="onLogin()"> כניסה למערכת</button>
-    <button  (click)="onActivity()" style="display:none"> פעילות קרובה </button>
+<div class="button-container">
+  <button mat-raised-button color="primary" (click)="onRegister()">
+    <mat-icon>person_add</mat-icon> רישום למערכת
+  </button>
   
+  <button mat-raised-button color="accent" (click)="onLogin()">
+    <mat-icon>login</mat-icon> כניסה למערכת
+  </button>
+  
+  <!-- הצגת כפתור אם idNumber שווה ל-1 -->
+  <button  mat-raised-button color="warn" (click)="onActivity()">
+    <mat-icon>event_available</mat-icon> פעילות קרובה
+  </button>
+  
+  <button mat-raised-button color="primary" (click)="onUpdate()">
+    <mat-icon>edit</mat-icon> עדכון פרטים
+  </button>
+</div>

@@ -77,7 +77,7 @@ export class UsersService {
   getIdNumberFromToken(): string | null {
     const decodedToken = this.getDecodedToken();
   console.log(decodedToken.IdNumber);
-    return decodedToken ? decodedToken.IdNumber || null : null;
+    return decodedToken ? decodedToken.nameid || null : null;
   }
 
   // מחיקת ה-JWT מ-sessionStorage

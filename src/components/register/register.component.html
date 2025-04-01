@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-container">
+<!-- <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-container">
   <div class="form-group">
     <label>מספר זהות:</label>
     <input type="text" formControlName="IdNumber" required>
@@ -94,6 +94,117 @@
     <input type="file" id="file4" (change)="onFileChange($event, 3)" />
   </div>
   
+
+  <button type="submit" [disabled]="registerForm.invalid" class="submit-btn">
+    הוסף משתמש
+  </button>
+</form> -->
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-container">
+  <!-- שדות הקלט הקיימים שלך כאן... -->
+  <div class="form-group">
+    <label>מספר זהות:</label>
+    <input type="text" formControlName="IdNumber" required>
+    @if(registerForm.get('IdNumber')?.invalid && registerForm.get('IdNumber')?.touched)
+    {<div>
+      מ. זהות הוא שדה חובה
+    </div>}
+  </div>
+  <div class="form-group">
+    <label>שם פרטי:</label>
+    <input type="text" formControlName="FirstName" required>
+    @if(registerForm.get('FirstName')?.invalid && registerForm.get('FirstName')?.touched)
+    { <div>
+      חובה להזין שם .
+    </div>
+    }
+  </div>
+
+  <div class="form-group">
+    <label>שם משפחה:</label>
+    <input type="text" formControlName="LastName" required>
+    @if(registerForm.get('LastName')?.invalid && registerForm.get('LastName')?.touched)
+    { <div>
+      חובה להזין משפחה .
+    </div>
+    }
+  </div>
+  <div class="form-group">
+    <label>כתובת:</label>
+    <input type="text" formControlName="Address" required>
+    @if(registerForm.get('Address')?.invalid && registerForm.get('Address')?.touched)
+    { <div>
+      חובה להזין כתובת .
+    </div>
+    }
+  </div>
+  <div class="form-group">
+    <label>עיר :</label>
+    <input type="text" formControlName="City" required>
+    @if(registerForm.get('City')?.invalid && registerForm.get('City')?.touched)
+    { <div>
+      חובה להזין עיר .
+    </div>
+    }
+  </div>
+  <div class="form-group">
+    <label> טלפון:</label>
+    <input type="Phone" formControlName="Phone" required>
+    @if(registerForm.get('Phone')?.invalid && registerForm.get('Phone')?.touched)
+    { <div>
+      חובה להזין טלפון .
+    </div>
+    }
+  </div>
+ 
+  <div class="form-group">
+    <label>Email :</label>
+    <input type="Email" formControlName="Email" required>
+    @if(registerForm.get('Email')?.invalid && registerForm.get('Email')?.touched)
+    { <div>
+      חובה להזין מייל תקין .
+    </div>
+    }
+  </div>
+  <div class="form-group">
+    <label>תאריך לידה :</label>
+    <input type="date" formControlName="BirthDate" required>
+    @if(registerForm.get('BirthDate')?.invalid && registerForm.get('BirthDate')?.touched)
+    { <div>
+      חובה להזין תאריך לידה .
+    </div>
+    }
+  </div>
+  <div class="file-upload-group">
+    <label for="file1" class="file-upload-btn">
+      <span class="icon">+</span> העלה קובץ 1
+    </label>
+    <input type="file" id="file1" (change)="onFileChange($event, 0)" />
+  
+    <label for="file2" class="file-upload-btn">
+      <span class="icon">+</span> העלה קובץ 2
+    </label>
+    <input type="file" id="file2" (change)="onFileChange($event, 1)" />
+  
+    <label for="file3" class="file-upload-btn">
+      <span class="icon">+</span> העלה קובץ 3
+    </label>
+    <input type="file" id="file3" (change)="onFileChange($event, 2)" />
+  
+    <label for="file4" class="file-upload-btn">
+      <span class="icon">+</span> העלה ספח ת.ז.
+    </label>
+    <input type="file" id="file4" (change)="onFileChange($event, 3)" />
+  </div>
+  
+ 
+
+  <!-- כפתורים להורדת קבצים -->
+  <div class="download-buttons">
+    <button type="button" (click)="downloadFile('Medications.pdf')">הורד קובץ 1</button>
+    <button type="button" (click)="downloadFile('agreement.pdf')">הורד קובץ 2</button>
+    <button type="button" (click)="downloadFile('personal.pdf')">הורד קובץ 3</button>
+  </div>
 
   <button type="submit" [disabled]="registerForm.invalid" class="submit-btn">
     הוסף משתמש

@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class UsersService {
   private apiUrl = "https://server-angular-tovumarpeh.onrender.com";
+ 
   private decodedToken: any | null = null;
 
   constructor(private http: HttpClient) {}
@@ -167,4 +168,7 @@ export class UsersService {
     const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/enroll`, enrollment, { headers });
   }
+  downloadFileFromService(fileName: string): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/files/${fileName}`, { responseType: 'blob' });
+}
 }

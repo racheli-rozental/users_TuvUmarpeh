@@ -45,6 +45,23 @@ export class RegisterComponent {
       console.warn(`No file selected for index ${index}`);
     }
   }
+  downloadFile(fileName: string) {
+    this.userService.downloadFileFromService(fileName)
+      .subscribe((response: Blob) => {
+        const blob = new Blob([response]);
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName; // שם הקובץ להורדה
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, error => {
+        console.error('Error downloading the file', error);
+      });
+}
+
 
   onSubmit() {
     const formData = new FormData();

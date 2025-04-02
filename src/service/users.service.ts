@@ -112,8 +112,7 @@ export class UsersService {
 
   // רישום משתמש חדש
   register(formData: FormData): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(`${this.apiUrl}/users`, formData, { headers });
+    return this.http.post(`${this.apiUrl}/users`, formData);
   }
 
   // עדכון פרטי משתמש

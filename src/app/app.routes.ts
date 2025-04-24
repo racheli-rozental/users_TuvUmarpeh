@@ -6,11 +6,12 @@ import { RegisterForActivityComponent } from '../components/register-for-activit
 import { LoginComponent } from '../components/login/login.component';
 import { RegisterComponent } from '../components/register/register.component';
 import { UpdateComponent } from '../components/update/update.component';
+import { HomeComponent } from '../components/home/home.component';
 
 
 export const routes: Routes = [
-    // { path: 'admin', window.location.href= 'http://localhost:5173', pathMatch: 'full' },
-    {path: '', component:LoginComponent},
+    {path:'',component:HomeComponent},
+    {path: '/login', component:LoginComponent},
     {path:'register',component:RegisterComponent},
     { path: 'activity', component: GetActivityComponent },
     { path: 'activity/:id', component: DetailsActivityComponent },

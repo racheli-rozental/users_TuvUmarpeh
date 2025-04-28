@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  selectedFiles: File[] = [];
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private userService:UsersService,private rout:Router) {
@@ -45,20 +46,23 @@ export class RegisterComponent {
   //     console.warn(`No file selected for index ${index}`);
   //   }
   // }
-  onFilesChange(event: any) {
-    const files: FileList = event.target.files;
-    const fileArray = this.registerForm.get('files') as FormArray;
+  // onFilesChange(event: any) {
+  //   const files: FileList = event.target.files;
+  //   const fileArray = this.registerForm.get('files') as FormArray;
     
-    // ננקה את הרשימה לפני שמוסיפים
-    fileArray.clear();
+  //   // ננקה את הרשימה לפני שמוסיפים
+  //   fileArray.clear();
   
-    if (files && files.length > 0) {
-      for (let i = 0; i < files.length; i++) {
-        fileArray.push(new FormControl(files[i]));
-      }
-    } else {
-      console.warn('No files selected');
-    }
+  //   if (files && files.length > 0) {
+  //     for (let i = 0; i < files.length; i++) {
+  //       fileArray.push(new FormControl(files[i]));
+  //     }
+  //   } else {
+  //     console.warn('No files selected');
+  //   }
+  // }
+  onFilesChange(event: any) {
+    this.selectedFiles = Array.from(event.target.files);
   }
   
   downloadFile(fileName: string) {
@@ -78,33 +82,38 @@ export class RegisterComponent {
       });
 }
 
-
-  onSubmit() {
-    const formData = new FormData();
-    formData.append('IdNumber', this.registerForm.value.IdNumber);
-    formData.append('FirstName', this.registerForm.value.FirstName);
-    formData.append('LastName', this.registerForm.value.LastName);
-    formData.append('Address', this.registerForm.value.Address);
-    formData.append('Phone', this.registerForm.value.Phone);
-    formData.append('City', this.registerForm.value.City);
-    formData.append('Email', this.registerForm.value.Email);
-    formData.append('BirthDate', this.registerForm.value.BirthDate);
-
-    // הוספת קבצים ל-FormData
-    this.files.controls.forEach((control, index) => {
-      formData.append('files', control.value);
-    });
-
-    // שליחת הבקשה לשרת
-    this.userService.register(formData).subscribe({
-      next: (response) => {
-        console.log('User created successfully:', response);
-        this.rout.navigate(['/']);
-
-      },
-      error: (error) => {
-        console.error('Error creating user:', error);
-      }
-    });
+onSubmit() {
+  if (this.registerForm.invalid) {
+    return;
   }
+
+  const formData = new FormData();
+  
+  // הוספת שדות רגילים
+  formData.append('IdNumber', this.registerForm.value.IdNumber);
+  formData.append('FirstName', this.registerForm.value.FirstName);
+  formData.append('LastName', this.registerForm.value.LastName);
+  formData.append('Address', this.registerForm.value.Address);
+  formData.append('Phone', this.registerForm.value.Phone);
+  formData.append('City', this.registerForm.value.City);
+  formData.append('Email', this.registerForm.value.Email);
+  formData.append('BirthDate', this.registerForm.value.BirthDate);
+
+  // הוספת קבצים
+  this.selectedFiles.forEach(file => {
+    formData.append('files', file);
+  });
+
+  // שליחת הבקשה
+  this.userService.register(formData).subscribe({
+    next: (response) => {
+      console.log('User created successfully:', response);
+      this.rout.navigate(['/']);
+    },
+    error: (error) => {
+      console.error('Error creating user:', error);
+    }
+  });
+}
+
 }

@@ -7,7 +7,7 @@
     <mat-icon>login</mat-icon> כניסה למערכת
   </button>
   
-  <!-- הצגת כפתור אם idNumber שווה ל-1 -->
+@if(token){
   <button  mat-raised-button color="warn" (click)="onActivity()">
     <mat-icon>event_available</mat-icon> פעילות קרובה
   </button>
@@ -15,4 +15,5 @@
   <button mat-raised-button color="primary" (click)="onUpdate()">
     <mat-icon>edit</mat-icon> עדכון פרטים
   </button>
+}
 </div>

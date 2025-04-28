@@ -12,7 +12,7 @@ body {
   /* עיצוב ה-form */
   form {
     margin-top: 60px;
-    margin-left: 550px;
+    /* margin-left: 400px; */
     background-color: #ffffff;
     padding: 30px;
     border-radius: 10px;

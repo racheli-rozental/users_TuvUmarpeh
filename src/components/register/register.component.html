@@ -75,7 +75,7 @@
     </div>
     }
   </div>
-  <div class="file-upload-group">
+  <!-- <div class="file-upload-group">
     <label for="file1" class="file-upload-btn">
       <span class="material-icons">upload_file</span> העלה טופס תרופות
     </label>
@@ -95,9 +95,15 @@
       <span class="material-icons">upload_file</span> העלה ספח ת.ז.
     </label>
     <input type="file" id="file4" (change)="onFileChange($event, 3)" />
+  </div> -->
+  
+  <div class="file-upload-group">
+    <label for="fileUpload" class="file-upload-btn">
+      <span class="material-icons">upload_file</span> העלה את כל המסמכים
+    </label>
+    <input type="file" id="fileUpload" (change)="onFilesChange($event)" multiple />
   </div>
   
- 
 
 <!-- חיבור לספריית האייקונים של Material -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

@@ -30,21 +30,37 @@ export class RegisterComponent {
     return this.registerForm.get('files') as FormArray;
   }
 
-  onFileChange(event: any, index: number) {
-    const file: File = event.target.files[0]; // קבל את הקובץ הראשון שנבחר
-    const fileArray = this.registerForm.get('files') as FormArray;
+  // onFileChange(event: any, index: number) {
+  //   const file: File = event.target.files[0]; // קבל את הקובץ הראשון שנבחר
+  //   const fileArray = this.registerForm.get('files') as FormArray;
   
-    // ודא שהמיקום קיים ב-FormArray
-    if (file) {
-      if (fileArray.length > index) {
-        fileArray.at(index).setValue(file); // עדכן את הקובץ במיקום המתאים
-      } else {
-        fileArray.insert(index, new FormControl(file)); // הוסף את הקובץ למיקום המתאים
+  //   // ודא שהמיקום קיים ב-FormArray
+  //   if (file) {
+  //     if (fileArray.length > index) {
+  //       fileArray.at(index).setValue(file); // עדכן את הקובץ במיקום המתאים
+  //     } else {
+  //       fileArray.insert(index, new FormControl(file)); // הוסף את הקובץ למיקום המתאים
+  //     }
+  //   } else {
+  //     console.warn(`No file selected for index ${index}`);
+  //   }
+  // }
+  onFilesChange(event: any) {
+    const files: FileList = event.target.files;
+    const fileArray = this.registerForm.get('files') as FormArray;
+    
+    // ננקה את הרשימה לפני שמוסיפים
+    fileArray.clear();
+  
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        fileArray.push(new FormControl(files[i]));
       }
     } else {
-      console.warn(`No file selected for index ${index}`);
+      console.warn('No files selected');
     }
   }
+  
   downloadFile(fileName: string) {
     this.userService.downloadFileFromService(fileName)
       .subscribe((response: Blob) => {

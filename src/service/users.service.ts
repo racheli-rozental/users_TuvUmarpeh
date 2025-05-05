@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class UsersService {
-  private apiUrl = "http://localhost:5074";
+  private apiUrl = "https://server-angular-tovumarpeh.onrender.com";
  
   private decodedToken: any | null = null;
 

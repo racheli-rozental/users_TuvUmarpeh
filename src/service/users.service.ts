@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class UsersService {
   private apiUrl = "https://server-angular-tovumarpeh.onrender.com";
  
   private decodedToken: any | null = null;
-
+  private loginSubject = new Subject<void>();
+  login$ = this.loginSubject.asObservable();
   constructor(private http: HttpClient) {}
 
   // פונקציית התחברות ושמירת ה-JWT
@@ -171,4 +173,9 @@ export class UsersService {
   downloadFileFromService(fileName: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/files/${fileName}`, { responseType: 'blob' });
 }
+
+
+  emitLogin() {
+    this.loginSubject.next();
+  }
 }

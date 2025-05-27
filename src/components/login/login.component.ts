@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
             console.log('admin');
           }
           else{
+          this.userService.emitLogin();
           this.router.navigate(['/activity']);
           } 
         },

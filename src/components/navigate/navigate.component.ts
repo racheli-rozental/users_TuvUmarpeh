@@ -14,8 +14,11 @@ export class NavigateComponent {
 
   constructor(private router: Router, private userService: UsersService,private cd: ChangeDetectorRef) {
   }
-  ngOnInit() {
+   ngOnInit() {
     this.token = sessionStorage.getItem('jwtToken');
+    this.userService.login$.subscribe(() => {
+      this.token = sessionStorage.getItem('jwtToken');
+    });
   }
 
 

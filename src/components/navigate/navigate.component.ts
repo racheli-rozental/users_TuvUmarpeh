@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from '../../service/users.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,13 +10,17 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './navigate.component.css'
 })
 export class NavigateComponent {
-  token=sessionStorage.getItem('token')||'';
+  token: string | null = null;
 
-  constructor(private router: Router, private userService: UsersService) {
+  constructor(private router: Router, private userService: UsersService,private cd: ChangeDetectorRef) {
+  }
+  ngOnInit() {
+    this.token = sessionStorage.getItem('jwtToken');
   }
 
 
 onRegister() {
+  
   this.router.navigate(['/register']);
 }
 
@@ -30,7 +34,10 @@ onUpdate(){
   this.router.navigate(['/update']);
 }
 
- 
+   refreshToken() {
+    this.token = sessionStorage.getItem('jwtToken');
+    this.cd.detectChanges();
+  }
 }
 
 

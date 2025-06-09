@@ -91,6 +91,19 @@ body {
     background-color: #cccccc;
     cursor: not-allowed;
   }
+  .snackbar-success {
+  background-color: #4caf50 !important;
+  color: #fff !important;
+  font-weight: bold;
+  direction: rtl;
+}
+
+.snackbar-error {
+  background-color: #f44336 !important;
+  color: #fff !important;
+  font-weight: bold;
+  direction: rtl;
+}
   
   /* עיצוב ריספונסיבי */
   @media (max-width: 768px) {

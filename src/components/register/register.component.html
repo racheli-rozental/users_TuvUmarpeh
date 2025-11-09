@@ -1,7 +1,5 @@
-
-
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-container">
-  
+
   <div class="form-group">
     <label>מספר זהות:</label>
     <input type="text" formControlName="IdNumber" required>
@@ -56,7 +54,7 @@
     </div>
     }
   </div>
- 
+
   <div class="form-group">
     <label>Email :</label>
     <input type="Email" formControlName="Email" required>
@@ -96,34 +94,34 @@
     </label>
     <input type="file" id="file4" (change)="onFileChange($event, 3)" />
   </div> -->
-  
+
   <div class="file-upload-group">
     <!-- <label for="fileUpload" class="file-upload-btn">
       <span class="material-icons">upload_file</span> העלה את כל המסמכים
     </label> -->
     <!-- <input type="file" id="fileUpload" (change)="onFilesChange($event)" multiple /> -->
-<input type="file" (change)="onFileChange($event, 'medications')" />
-<input type="file" (change)="onFileChange($event, 'agreement')" />
-<input type="file" (change)="onFileChange($event, 'personaldetails')" />
-<input type="file" (change)="onFileChange($event, 'identity')" />
+    <input type="file" (change)="onFileChange($event, 'medications')" /><span> העלה טופס תרופות</span>
+    <input type="file" (change)="onFileChange($event, 'agreement')" />
+    <input type="file" (change)="onFileChange($event, 'personaldetails')" />
+    <input type="file" (change)="onFileChange($event, 'identity')" />
 
   </div>
-  
 
-<!-- חיבור לספריית האייקונים של Material -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<div class="download-buttons">
-  <button type="button" (click)="downloadFile('תרופות.pdf')">
-    <span class="material-icons">download_for_offline</span> הורד טופס תרופות
-  </button>
-  <button type="button" (click)="downloadFile('הסכמות.pdf')">
-    <span class="material-icons">download_for_offline</span> הורד טופס הסכמה
-  </button>
-  <button type="button" (click)="downloadFile('פרטים אישיים.pdf')">
-    <span class="material-icons">download_for_offline</span> הורד טופס פרטים אישיים
-  </button>
-</div>
+  <!-- חיבור לספריית האייקונים של Material -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <div class="download-buttons">
+    <button type="button" (click)="downloadFile('תרופות.pdf')">
+      <span class="material-icons">download_for_offline</span> הורד טופס תרופות
+    </button>
+    <button type="button" (click)="downloadFile('הסכמות.pdf')">
+      <span class="material-icons">download_for_offline</span> הורד טופס הסכמה
+    </button>
+    <button type="button" (click)="downloadFile('פרטים אישיים.pdf')">
+      <span class="material-icons">download_for_offline</span> הורד טופס פרטים אישיים
+    </button>
+  </div>
 
   <button type="submit" [disabled]="registerForm.invalid" class="submit-btn">
     הוסף משתמש
